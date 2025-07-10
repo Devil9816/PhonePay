@@ -195,7 +195,7 @@ with tab4:
     # selected_geo = st.selectbox("🧭 Choose Dataset", geo_datasets)
 
     # geo_df = pd.read_csv(os.path.join(BASE_PATH, dataset_map[selected_geo]))
-    geo_df = pd.read_csv('cleaned_data\map_insurance.csv')
+    geo_df = pd.read_csv('cleaned_data\map_insurances.csv')
     geo_df["metric_log"] = np.log1p(geo_df["metric"])  # log1p handles 0 safely
 
     if all(col in geo_df.columns for col in ["latitude", "longitude"]):
