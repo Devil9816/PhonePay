@@ -1,3 +1,3 @@
 # PhonePay
 
-Deployed on Streamlit: https://phonepay-ayushsingh.streamlit.app/
+Deployed on Streamlit: [App](https://phonepay-ayush.streamlit.app/)
