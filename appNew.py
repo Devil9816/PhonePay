@@ -98,8 +98,8 @@ if "quarter" in df.columns:
     df = df[df["quarter"] == selected_quarter]
 
 # 🔮 Tabs
-tab1, tab2, tab3, tab4 = st.tabs(["📊 Dashboard", "🔎 EDA", "🧠 SQL Case Studies", "🗺 Geo Visualization"])
-
+# tab1, tab2, tab3, tab4 = st.tabs(["📊 Dashboard", "🔎 EDA", "🧠 SQL Case Studies", "🗺 Geo Visualization"])
+tab1, tab2, tab3 = st.tabs(["📊 Dashboard", "🔎 EDA", "🧠 SQL Case Studies"])
 # --- Tab 1: Dashboard ---
 with tab1:
     st.markdown(f"## 📊 {selected_dataset}")
@@ -187,58 +187,58 @@ with tab3:
         st.markdown("---")
 
 
-# --- Tab 4: Geo Visualization ---
-with tab4:
-    st.markdown("## 🗺 Geo Visualizations (Map View)")
+# # --- Tab 4: Geo Visualization ---
+# with tab4:
+#     st.markdown("## 🗺 Geo Visualizations (Map View)")
 
-    # geo_datasets = ["Map User", "Map Transaction", "Map Insurance", "Top User", "Top Transaction", "Top Insurance"]
-    # selected_geo = st.selectbox("🧭 Choose Dataset", geo_datasets)
+#     # geo_datasets = ["Map User", "Map Transaction", "Map Insurance", "Top User", "Top Transaction", "Top Insurance"]
+#     # selected_geo = st.selectbox("🧭 Choose Dataset", geo_datasets)
 
-    # geo_df = pd.read_csv(os.path.join(BASE_PATH, dataset_map[selected_geo]))
-    geo_df = pd.read_csv('cleaned_data\map_insurances.csv')
-    geo_df["metric_log"] = np.log1p(geo_df["metric"])  # log1p handles 0 safely
+#     # geo_df = pd.read_csv(os.path.join(BASE_PATH, dataset_map[selected_geo]))
+#     geo_df = pd.read_csv('cleaned_data\map_insurances.csv')
+#     geo_df["metric_log"] = np.log1p(geo_df["metric"])  # log1p handles 0 safely
 
-    if all(col in geo_df.columns for col in ["latitude", "longitude"]):
-        if "users" in geo_df.columns:
-            size_col = "users"
-        elif "count" in geo_df.columns:
-            size_col = "count"
-        elif "amount" in geo_df.columns:
-            size_col = "amount"
-        else:
-            size_col = geo_df.select_dtypes(include="number").columns[-1]
+#     if all(col in geo_df.columns for col in ["latitude", "longitude"]):
+#         if "users" in geo_df.columns:
+#             size_col = "users"
+#         elif "count" in geo_df.columns:
+#             size_col = "count"
+#         elif "amount" in geo_df.columns:
+#             size_col = "amount"
+#         else:
+#             size_col = geo_df.select_dtypes(include="number").columns[-1]
 
-        geo_df = geo_df.sort_values(by=size_col, ascending=False).head(1000)
+#         geo_df = geo_df.sort_values(by=size_col, ascending=False).head(1000)
 
-        fig = px.scatter_geo(
-            geo_df,
-            lat="latitude",
-            lon="longitude",
-            color="metric_log",
-            size="metric",
-            hover_name="label",
-            hover_data=["state", "year", "quarter", "metric"],
-            title="Map_Insurance Metric Map (Colored by Value)",
-            template="plotly_dark",
-            opacity=0.5,
-            color_continuous_scale="plasma"
-        )
+#         fig = px.scatter_geo(
+#             geo_df,
+#             lat="latitude",
+#             lon="longitude",
+#             color="metric_log",
+#             size="metric",
+#             hover_name="label",
+#             hover_data=["state", "year", "quarter", "metric"],
+#             title="Map_Insurance Metric Map (Colored by Value)",
+#             template="plotly_dark",
+#             opacity=0.5,
+#             color_continuous_scale="plasma"
+#         )
 
-        fig.update_geos(
-            visible=False,
-            resolution=50,
-            scope="asia",
-            showcountries=True,
-            countrycolor="white",
-            lataxis_range=[6, 38],
-            lonaxis_range=[68, 98]
-        )
+#         fig.update_geos(
+#             visible=False,
+#             resolution=50,
+#             scope="asia",
+#             showcountries=True,
+#             countrycolor="white",
+#             lataxis_range=[6, 38],
+#             lonaxis_range=[68, 98]
+#         )
 
-        fig.update_layout(
-            margin={"r": 0, "t": 40, "l": 0, "b": 0}
-        )
+#         fig.update_layout(
+#             margin={"r": 0, "t": 40, "l": 0, "b": 0}
+#         )
 
-        st.plotly_chart(fig, use_container_width=True)
+#         st.plotly_chart(fig, use_container_width=True)
 
-    else:
-        st.warning("⚠ This dataset doesn't have latitude & longitude. Add them to enable geo visualizations.")
+#     else:
+#         st.warning("⚠ This dataset doesn't have latitude & longitude. Add them to enable geo visualizations.")
